@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mSlideText = (TextView) this.findViewById(R.id.slide_id);
 
         mContentText.setOnClickListener(this);
-//        mSlideText.setOnClickListener(this);
+        mSlideText.setOnClickListener(this);
 
         mListView = (ListView) this.findViewById(R.id.listview_id);
         DemoListAdapter adapter = new DemoListAdapter();

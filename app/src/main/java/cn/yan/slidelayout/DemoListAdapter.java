@@ -21,16 +21,16 @@ public class DemoListAdapter extends BaseAdapter {
 
     public DemoListAdapter() {
         mListData = new ArrayList<>();
-        mListData.add("测试案例");
-        mListData.add("快来试试");
-        mListData.add("不服来一局");
-        mListData.add("来呀来呀，来呀");
-        mListData.add("我了个去");
-        mListData.add("山炮玩意儿");
-        mListData.add("支持是一种鼓励");
-        mListData.add("坚持");
-        mListData.add("加油");
-        mListData.add("哈哈，我去");
+        mListData.add("AbsListView 测试案例");
+        mListData.add("AbsListView 快来试试");
+        mListData.add("AbsListView 不服来一局");
+        mListData.add("AbsListView 来呀来呀，来呀");
+        mListData.add("AbsListView 我了个去");
+        mListData.add("AbsListView 山炮玩意儿");
+        mListData.add("AbsListView 支持是一种鼓励");
+        mListData.add("AbsListView 坚持");
+        mListData.add("AbsListView 加油");
+        mListData.add("AbsListView 哈哈，我去");
     }
 
     @Override

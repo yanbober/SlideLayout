@@ -2,7 +2,6 @@ package cn.yan.library;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -20,13 +19,20 @@ public class SlideLayout extends LinearLayout {
     public static final int STATE_SLIDING = 1;
     public static final int STATE_OPEN = 2;
 
+    private static final int ORI_RIGHT = 0;
+    private static final int ORI_LEFT = 1;
+    private static final int ORI_TOP = 2;
+    private static final int ORI_BOTTOM = 3;
+
     private View mContentView;
     private View mSlideView;
 
     private Scroller mScroller;
 
-    private int lastX = 0;
-    private int lastY = 0;
+    private int mLastX = 0;
+    private int mLastY = 0;
+
+    private int mSlideOrientation = ORI_RIGHT;
 
     public SlideLayout(Context context) {
         this(context, null);
@@ -77,7 +83,6 @@ public class SlideLayout extends LinearLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-        Log.i("YYYY", "onInterceptTouchEvent-------isScrolling="+isScrolling+"-------ev="+event.getAction());
         return isScrolling || super.onInterceptTouchEvent(event);
     }
 
@@ -88,25 +93,24 @@ public class SlideLayout extends LinearLayout {
         int x = (int) event.getX();
         int y = (int) event.getY();
         int scrollX = getScrollX();
-        Log.i("YYYY", "dispatchTouchEvent---------scrollX="+scrollX+", x="+x+", lastX="+lastX+"-----ev="+event.getAction());
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                lastX = (int) event.getX();
-                lastY = (int) event.getY();
+                mLastX = (int) event.getX();
+                mLastY = (int) event.getY();
                 isScrolling = false;
-                break;
+                //Maybe child not set OnClickListener, so ACTION_DOWN need to return true and use super.
+                super.dispatchTouchEvent(event);
+                return true;
             case MotionEvent.ACTION_MOVE:
-                int offsetX = x - lastX;
-                int offsetY = y - lastY;
+                int offsetX = x - mLastX;
+                int offsetY = y - mLastY;
                 if (/*Math.abs(offsetX) < 10 &&*/ Math.abs(offsetX) - Math.abs(offsetY) < 1) {
-                    Log.i("YYYY", "-------break--------------offsetX="+offsetX+", offsetY="+offsetY);
                     break;
                 }
                 getParent().requestDisallowInterceptTouchEvent(true);
                 isScrolling = true;
                 int newScrollX = scrollX - offsetX;
-                Log.i("YYYY", "----new scroll-----------------newScrollX="+newScrollX);
                 if (offsetX != 0) {
                     if (newScrollX < 0) {
                         newScrollX = 0;
@@ -123,13 +127,12 @@ public class SlideLayout extends LinearLayout {
                 if (scrollX > mSlideView.getMeasuredWidth() / 2) {
                     finalScrollX = mSlideView.getMeasuredWidth();
                 }
-                Log.i("YYYY", "----MotionEvent.ACTION_UP---------scrollX="+scrollX+", finalScrollX="+finalScrollX);
                 smoothScrollTo(finalScrollX, 0);
                 break;
         }
 
-        lastX = x;
-        lastY = y;
+        mLastX = x;
+        mLastY = y;
         return super.dispatchTouchEvent(event);
     }
 

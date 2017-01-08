@@ -4,13 +4,26 @@
     android:layout_height="80dp">
     <TextView
         android:id="@+id/content_id"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <TextView
-        android:id="@+id/slide_id"
-        android:background="@android:color/holo_blue_dark"
-        android:layout_width="100dp"
+    <LinearLayout
+        android:layout_width="200dp"
         android:layout_height="match_parent"
-        android:text="删除"/>
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/slide_id"
+            android:background="@android:color/holo_blue_dark"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="删除"/>
+
+        <TextView
+            android:id="@+id/slide1_id"
+            android:background="@android:color/holo_green_dark"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="收藏"/>
+    </LinearLayout>
 </cn.yan.library.SlideLayout>
