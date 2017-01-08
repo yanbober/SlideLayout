@@ -19,11 +19,6 @@ public class SlideLayout extends LinearLayout {
     public static final int STATE_SLIDING = 1;
     public static final int STATE_OPEN = 2;
 
-    private static final int ORI_RIGHT = 0;
-    private static final int ORI_LEFT = 1;
-    private static final int ORI_TOP = 2;
-    private static final int ORI_BOTTOM = 3;
-
     private View mContentView;
     private View mSlideView;
 
@@ -32,7 +27,7 @@ public class SlideLayout extends LinearLayout {
     private int mLastX = 0;
     private int mLastY = 0;
 
-    private int mSlideOrientation = ORI_RIGHT;
+    private int mSlideSensitiveWidth = 0;
 
     public SlideLayout(Context context) {
         this(context, null);
@@ -124,7 +119,8 @@ public class SlideLayout extends LinearLayout {
                 isScrolling = false;
                 getParent().requestDisallowInterceptTouchEvent(false);
                 int finalScrollX = 0;
-                if (scrollX > mSlideView.getMeasuredWidth() / 2) {
+                mSlideSensitiveWidth = mSlideView.getMeasuredWidth() / 2;
+                if (scrollX > mSlideSensitiveWidth) {
                     finalScrollX = mSlideView.getMeasuredWidth();
                 }
                 smoothScrollTo(finalScrollX, 0);
@@ -138,9 +134,12 @@ public class SlideLayout extends LinearLayout {
 
     private void smoothScrollTo(int destX, int destY) {
         int scrollX = getScrollX();
-        int delta = destX - scrollX;
-        mScroller.startScroll(scrollX, 0, delta, 0, Math.abs(delta) * 3);
-        invalidate();
+        int deltaX = destX - scrollX;
+        int scrollY = getScrollY();
+        int deltaY = destY - scrollY;
+        mScroller.startScroll(scrollX, scrollY, deltaX, deltaY,
+                (int) (Math.abs(Math.sqrt(deltaX*deltaX + deltaY*deltaY)) * 3));
+        postInvalidate();
     }
 
     @Override
