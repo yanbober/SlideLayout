@@ -48,7 +48,7 @@ public class MiniSlideRightLayout extends LinearLayout {
 
     private int mSlideSensitiveWidth = 0;
 
-    boolean mIsScrolling = false;
+    private boolean mIsScrolling = false;
 
     public MiniSlideRightLayout(Context context) {
         this(context, null);

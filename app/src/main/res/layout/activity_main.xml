@@ -32,4 +32,24 @@
         android:layout_height="200dp"
         android:background="@android:color/darker_gray"></ListView>
 
+    <cn.yan.library.SlideLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@android:color/holo_orange_dark">
+        <TextView
+            android:id="@+id/contentslide_id"
+            android:background="@android:color/holo_blue_dark"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="我是真正的SlideLayout"/>
+
+        <TextView
+            android:id="@+id/slideslide_id"
+            android:background="@android:color/holo_red_light"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="删除"/>
+    </cn.yan.library.SlideLayout>
+
 </LinearLayout>

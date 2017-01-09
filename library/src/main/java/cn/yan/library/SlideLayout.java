@@ -25,18 +25,24 @@ package cn.yan.library;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
 import android.widget.Scroller;
 
 /**
  * like SlidingPaneLayout, all direction support.
  */
-public class SlideLayout extends LinearLayout {
+public class SlideLayout extends ViewGroup {
     public static final int STATE_CLOSE = 0;
     public static final int STATE_SLIDING = 1;
     public static final int STATE_OPEN = 2;
+
+    private static final int SLIDE_RIGHT = 0;
+    private static final int SLIDE_LEFT = 1;
+    private static final int SLIDE_TOP = 2;
+    private static final int SLIDE_BOTTOM = 3;
 
     private View mContentView;
     private View mSlideView;
@@ -47,8 +53,8 @@ public class SlideLayout extends LinearLayout {
     private int mLastY = 0;
 
     private int mSlideSensitiveWidth = 0;
-
-    boolean mIsScrolling = false;
+    private boolean mIsScrolling = false;
+    private int mSlideDirection = SLIDE_RIGHT;
 
     public SlideLayout(Context context) {
         this(context, null);
@@ -64,19 +70,7 @@ public class SlideLayout extends LinearLayout {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        setOrientation(HORIZONTAL);
         mScroller = new Scroller(context);
-    }
-
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        if (getChildCount() != 2) {
-            throw new IllegalArgumentException("SlideLayout only need contains two child (content and slide).");
-        }
-
-        mContentView = getChildAt(0);
-        mSlideView = getChildAt(1);
     }
 
     public int getSlideState() {
@@ -95,6 +89,42 @@ public class SlideLayout extends LinearLayout {
 
     public void smoothOpenSlide() {
         smoothScrollTo(mSlideView.getMeasuredWidth(), 0);
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        if (getChildCount() != 2) {
+            throw new IllegalArgumentException("SlideLayout only need contains two child (content and slide).");
+        }
+
+        mContentView = getChildAt(0);
+        mSlideView = getChildAt(1);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        measureChildren(widthMeasureSpec, heightMeasureSpec);
+        setMeasuredDimension(mContentView.getMeasuredWidth(), mContentView.getMeasuredHeight());
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        mContentView.layout(0, 0, getMeasuredWidth(), getMeasuredHeight());
+        switch (mSlideDirection) {
+            case SLIDE_LEFT:
+                mSlideView.layout(-mSlideView.getMeasuredWidth(), 0, 0, getMeasuredHeight());
+                break;
+            case SLIDE_RIGHT:
+                mSlideView.layout(getMeasuredWidth(), 0, mSlideView.getMeasuredWidth() + getMeasuredWidth(), getMeasuredHeight());
+                break;
+            case SLIDE_TOP:
+                mSlideView.layout(0, -mSlideView.getMeasuredHeight(), getMeasuredWidth(), 0);
+                break;
+            case SLIDE_BOTTOM:
+                mSlideView.layout(0, getMeasuredHeight(), getMeasuredWidth(), mSlideView.getMeasuredHeight() + getMeasuredHeight());
+                break;
+        }
     }
 
     @Override
