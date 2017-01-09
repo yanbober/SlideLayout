@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="cn.yan.slidelayout.MainActivity">
 
-    <cn.yan.library.SlideLayout
+    <cn.yan.library.MiniSlideRightLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@android:color/holo_orange_dark">
@@ -24,7 +24,7 @@
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:text="删除"/>
-    </cn.yan.library.SlideLayout>
+    </cn.yan.library.MiniSlideRightLayout>
 
     <ListView
         android:id="@+id/listview_id"

@@ -10,7 +10,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.yan.library.SlideLayout;
+import cn.yan.library.MiniSlideRightLayout;
 
 /**
  * Created by yan on 17-1-8.
@@ -51,7 +51,7 @@ public class DemoListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
         //TODO
-        final SlideLayout itemView = (SlideLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_demo_list, parent, false);
+        final MiniSlideRightLayout itemView = (MiniSlideRightLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_demo_list, parent, false);
         TextView content = (TextView) itemView.findViewById(R.id.content_id);
         TextView slide = (TextView) itemView.findViewById(R.id.slide_id);
         content.setText(mListData.get(position));
@@ -59,7 +59,7 @@ public class DemoListAdapter extends BaseAdapter {
         content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (itemView.getSlideState() == SlideLayout.STATE_OPEN) {
+                if (itemView.getSlideState() == MiniSlideRightLayout.STATE_OPEN) {
                     itemView.smoothCloseSlide();
                 } else {
                     Toast.makeText(parent.getContext().getApplicationContext(), mListData.get(position), Toast.LENGTH_SHORT).show();

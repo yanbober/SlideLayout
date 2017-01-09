@@ -29,11 +29,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Scroller;
-
 /**
- * like SlidingPaneLayout, all direction support.
+ * like SlidingPaneLayout, but this used to mini lib and only support right slide.
+ * used to no support v4 import.
  */
-public class SlideLayout extends LinearLayout {
+public class MiniSlideRightLayout extends LinearLayout {
     public static final int STATE_CLOSE = 0;
     public static final int STATE_SLIDING = 1;
     public static final int STATE_OPEN = 2;
@@ -50,15 +50,15 @@ public class SlideLayout extends LinearLayout {
 
     boolean mIsScrolling = false;
 
-    public SlideLayout(Context context) {
+    public MiniSlideRightLayout(Context context) {
         this(context, null);
     }
 
-    public SlideLayout(Context context, AttributeSet attrs) {
+    public MiniSlideRightLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public SlideLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MiniSlideRightLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
