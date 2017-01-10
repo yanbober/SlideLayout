@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -54,8 +55,9 @@
 
     <cn.yan.library.SlideLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@android:color/holo_orange_dark">
+        android:layout_height="match_parent"
+        app:slideDirection="fromLeft"
+        app:slideCriticalValue="50dp">
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -65,7 +67,7 @@
             android:background="@android:color/holo_red_light"
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:text="删除"/>
+            android:text="我是侧滑区域"/>
     </cn.yan.library.SlideLayout>
 
 </LinearLayout>
