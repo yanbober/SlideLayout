@@ -34,7 +34,7 @@
 
     <cn.yan.library.SlideLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="80dp"
         android:background="@android:color/holo_orange_dark">
         <TextView
             android:id="@+id/contentslide_id"
@@ -49,6 +49,22 @@
             android:background="@android:color/holo_red_light"
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:text="删除"/>
+    </cn.yan.library.SlideLayout>
+
+    <cn.yan.library.SlideLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@android:color/holo_orange_dark">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:entries="@array/demo_array"/>
+
+        <TextView
+            android:background="@android:color/holo_red_light"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
             android:text="删除"/>
     </cn.yan.library.SlideLayout>
 

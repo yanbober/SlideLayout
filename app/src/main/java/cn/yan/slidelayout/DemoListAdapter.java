@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.yan.library.MiniSlideRightLayout;
+import cn.yan.library.SlideLayout;
 
 /**
  * Created by yan on 17-1-8.
@@ -51,7 +52,7 @@ public class DemoListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
         //TODO
-        final MiniSlideRightLayout itemView = (MiniSlideRightLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_demo_list, parent, false);
+        final SlideLayout itemView = (SlideLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_demo_list, parent, false);
         TextView content = (TextView) itemView.findViewById(R.id.content_id);
         TextView slide = (TextView) itemView.findViewById(R.id.slide_id);
         content.setText(mListData.get(position));

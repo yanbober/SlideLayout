@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<cn.yan.library.MiniSlideRightLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<cn.yan.library.SlideLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="80dp">
     <TextView
@@ -26,4 +26,4 @@
             android:layout_height="match_parent"
             android:text="收藏"/>
     </LinearLayout>
-</cn.yan.library.MiniSlideRightLayout>
+</cn.yan.library.SlideLayout>

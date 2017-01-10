@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">SlideLayout</string>
+
+    <array name="demo_array">
+        <item>fdsfsgfdsgsgdsg 1</item>
+        <item>fdsfsgfdsgsgdsg 3</item>
+        <item>fdsfsgfdsgsgdsg 5</item>
+        <item>fdsfsgfdsgsgdsg 7</item>
+        <item>fdsfsgfdsgsgdsg 9</item>
+        <item>fdsfsgfdsgsgdsg a</item>
+        <item>fdsfsgfdsgsgdsg b</item>
+        <item>fdsfsgfdsgsgdsg c</item>
+        <item>fdsfsgfdsgsgdsg d</item>
+        <item>fdsfsgfdsgsgdsg e</item>
+        <item>fdsfsgfdsgsgdsg f</item>
+        <item>fdsfsgfdsgsgdsg g</item>
+        <item>fdsfsgfdsgsgdsg h</item>
+        <item>fdsfsgfdsgsgdsg i</item>
+    </array>
 </resources>
