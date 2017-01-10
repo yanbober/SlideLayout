@@ -1,6 +1,6 @@
 # SlideLayout
 
-纯手工超级迷你轻量级全方向完美滑动处理侧滑控件（比官方 support v4 包 SlidingPaneLayout 控件更加 Q 迷你，累计代码不足 300 行），支持上下左右有各种侧拉，可配置侧拉松手临界距离，支持单独使用、ListView、GridView、RecycleView、ScrollView 等各种嵌套（作为 item 使用或者作为以上所有控件的父容器使用），具体不同配置展示效果如下图。
+纯手工超级迷你轻量级全方向完美滑动处理侧滑控件（比官方 support v4 包 SlidingPaneLayout 控件更加 Q 迷你，累计代码不足 300 行），支持上下左右有各种侧拉，可配置侧拉松手临界距离，支持单独使用、ListView、GridView、RecycleView、ScrollView、ViewPager 等各种嵌套（作为 item 使用或者作为以上所有控件的父容器使用），具体不同配置展示效果如下图。
 
 <div><img src=".picture/demo.png" width="350"></div>
 
