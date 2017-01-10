@@ -25,7 +25,6 @@ package cn.yan.library;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,9 +51,9 @@ public class SlideLayout extends ViewGroup {
     private int mLastX = 0;
     private int mLastY = 0;
 
-    private int mSlideSensitiveWidth = 0;
+    private int mSlideSensitive = 0;
     private boolean mIsScrolling = false;
-    private int mSlideDirection = SLIDE_RIGHT;
+    private int mSlideDirection = SLIDE_BOTTOM;
 
     public SlideLayout(Context context) {
         this(context, null);
@@ -78,7 +77,9 @@ public class SlideLayout extends ViewGroup {
         if (mIsScrolling) {
             retValue = STATE_SLIDING;
         } else {
-            retValue = (getScrollX() == 0) ? STATE_CLOSE : STATE_OPEN;
+            int scrollOffset = (mSlideDirection == SLIDE_LEFT || mSlideDirection == SLIDE_RIGHT) ?
+                                getScrollX() : getScrollY();
+            retValue = (scrollOffset == 0) ? STATE_CLOSE : STATE_OPEN;
         }
         return retValue;
     }
@@ -88,7 +89,20 @@ public class SlideLayout extends ViewGroup {
     }
 
     public void smoothOpenSlide() {
-        smoothScrollTo(mSlideView.getMeasuredWidth(), 0);
+        switch (mSlideDirection) {
+            case SLIDE_RIGHT:
+                smoothScrollTo(mSlideView.getMeasuredWidth(), 0);
+                break;
+            case SLIDE_LEFT:
+                smoothScrollTo(-mSlideView.getMeasuredWidth(), 0);
+                break;
+            case SLIDE_TOP:
+                smoothScrollTo(0, -mSlideView.getMeasuredHeight());
+                break;
+            case SLIDE_BOTTOM:
+                smoothScrollTo(0, mSlideView.getMeasuredHeight());
+                break;
+        }
     }
 
     @Override
@@ -116,13 +130,15 @@ public class SlideLayout extends ViewGroup {
                 mSlideView.layout(-mSlideView.getMeasuredWidth(), 0, 0, getMeasuredHeight());
                 break;
             case SLIDE_RIGHT:
-                mSlideView.layout(getMeasuredWidth(), 0, mSlideView.getMeasuredWidth() + getMeasuredWidth(), getMeasuredHeight());
+                mSlideView.layout(getMeasuredWidth(), 0,
+                        mSlideView.getMeasuredWidth() + getMeasuredWidth(), getMeasuredHeight());
                 break;
             case SLIDE_TOP:
                 mSlideView.layout(0, -mSlideView.getMeasuredHeight(), getMeasuredWidth(), 0);
                 break;
             case SLIDE_BOTTOM:
-                mSlideView.layout(0, getMeasuredHeight(), getMeasuredWidth(), mSlideView.getMeasuredHeight() + getMeasuredHeight());
+                mSlideView.layout(0, getMeasuredHeight(),
+                        getMeasuredWidth(), mSlideView.getMeasuredHeight() + getMeasuredHeight());
                 break;
         }
     }
@@ -137,7 +153,7 @@ public class SlideLayout extends ViewGroup {
         int eventX = (int) event.getX();
         int eventY = (int) event.getY();
         int scrollX = getScrollX();
-
+        int scrollY = getScrollY();
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mLastX = (int) event.getX();
@@ -149,28 +165,81 @@ public class SlideLayout extends ViewGroup {
             case MotionEvent.ACTION_MOVE:
                 int offsetX = eventX - mLastX;
                 int offsetY = eventY - mLastY;
-                if (Math.abs(offsetX) - Math.abs(offsetY) < 1) {
-                    break;
-                }
+//                if (Math.abs(offsetX) - Math.abs(offsetY) < 1) {
+//                    break;
+//                }
                 getParent().requestDisallowInterceptTouchEvent(true);
                 mIsScrolling = true;
-                int newScrollX = scrollX - offsetX;
-                if (newScrollX < 0) {
-                    newScrollX = 0;
-                } else if (newScrollX > mSlideView.getMeasuredWidth()) {
-                    newScrollX = mSlideView.getMeasuredWidth();
+                int newScrollX = 0;
+                int newScrollY = 0;
+                switch (mSlideDirection) {
+                    case SLIDE_RIGHT:
+                        newScrollX = scrollX - offsetX;
+                        if (newScrollX < 0) {
+                            newScrollX = 0;
+                        } else if (newScrollX > mSlideView.getMeasuredWidth()) {
+                            newScrollX = mSlideView.getMeasuredWidth();
+                        }
+                        break;
+                    case SLIDE_LEFT:
+                        newScrollX = scrollX - offsetX;
+                        if (newScrollX < -mSlideView.getMeasuredWidth()) {
+                            newScrollX = -mSlideView.getMeasuredWidth();
+                        } else if (newScrollX > 0) {
+                            newScrollX = 0;
+                        }
+                        break;
+                    case SLIDE_TOP:
+                        newScrollY = scrollY - offsetY;
+                        if (newScrollY < -mSlideView.getMeasuredHeight()) {
+                            newScrollY = -mSlideView.getMeasuredHeight();
+                        } else if (newScrollY > 0) {
+                            newScrollY = 0;
+                        }
+                        break;
+                    case SLIDE_BOTTOM:
+                        newScrollY = scrollY - offsetY;
+                        if (newScrollY < 0) {
+                            newScrollY = 0;
+                        } else if (newScrollY > mSlideView.getMeasuredHeight()) {
+                            newScrollY = mSlideView.getMeasuredHeight();
+                        }
+                        break;
                 }
-                scrollTo(newScrollX, 0);
+                scrollTo(newScrollX, newScrollY);
                 break;
             case MotionEvent.ACTION_UP:
                 mIsScrolling = false;
                 getParent().requestDisallowInterceptTouchEvent(false);
                 int finalScrollX = 0;
-                mSlideSensitiveWidth = mSlideView.getMeasuredWidth() / 2;
-                if (scrollX > mSlideSensitiveWidth) {
-                    finalScrollX = mSlideView.getMeasuredWidth();
+                int finalScrollY = 0;
+                switch (mSlideDirection) {
+                    case SLIDE_RIGHT:
+                        mSlideSensitive = mSlideView.getMeasuredWidth() / 2;
+                        if (scrollX > mSlideSensitive) {
+                            finalScrollX = mSlideView.getMeasuredWidth();
+                        }
+                        break;
+                    case SLIDE_LEFT:
+                        mSlideSensitive = -mSlideView.getMeasuredWidth() / 2;
+                        if (scrollX < mSlideSensitive) {
+                            finalScrollX = -mSlideView.getMeasuredWidth();
+                        }
+                        break;
+                    case SLIDE_TOP:
+                        mSlideSensitive = -mSlideView.getMeasuredHeight() / 2;
+                        if (scrollY < mSlideSensitive) {
+                            finalScrollY = -mSlideView.getMeasuredHeight();
+                        }
+                        break;
+                    case SLIDE_BOTTOM:
+                        mSlideSensitive = mSlideView.getMeasuredHeight() / 2;
+                        if (scrollY > mSlideSensitive) {
+                            finalScrollY = mSlideView.getMeasuredHeight();
+                        }
+                        break;
                 }
-                smoothScrollTo(finalScrollX, 0);
+                smoothScrollTo(finalScrollX, finalScrollY);
                 break;
         }
 
