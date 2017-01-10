@@ -24,9 +24,11 @@
 package cn.yan.library;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.Scroller;
 
@@ -51,9 +53,9 @@ public class SlideLayout extends ViewGroup {
     private int mLastX = 0;
     private int mLastY = 0;
 
-    private int mSlideSensitive = 0;
+    private int mSlideCriticalValue = 0;
     private boolean mIsScrolling = false;
-    private int mSlideDirection = SLIDE_BOTTOM;
+    private int mSlideDirection;
 
     public SlideLayout(Context context) {
         this(context, null);
@@ -69,6 +71,11 @@ public class SlideLayout extends ViewGroup {
     }
 
     private void init(Context context, AttributeSet attrs) {
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SlideLayout);
+        mSlideDirection = typedArray.getInt(R.styleable.SlideLayout_slideDirection, SLIDE_RIGHT);
+        mSlideCriticalValue = typedArray.getInt(R.styleable.SlideLayout_slideCriticalValue, 0);
+        typedArray.recycle();
+
         mScroller = new Scroller(context);
     }
 
@@ -165,9 +172,15 @@ public class SlideLayout extends ViewGroup {
             case MotionEvent.ACTION_MOVE:
                 int offsetX = eventX - mLastX;
                 int offsetY = eventY - mLastY;
-//                if (Math.abs(offsetX) - Math.abs(offsetY) < 1) {
-//                    break;
-//                }
+                int directionMoveOffset = 0;
+                if (mSlideDirection == SLIDE_LEFT || mSlideDirection == SLIDE_RIGHT) {
+                    directionMoveOffset = Math.abs(offsetX) - Math.abs(offsetY);
+                } else {
+                    directionMoveOffset = Math.abs(offsetY) - Math.abs(offsetX);
+                }
+                if (directionMoveOffset < ViewConfiguration.getTouchSlop()) {
+                    break;
+                }
                 getParent().requestDisallowInterceptTouchEvent(true);
                 mIsScrolling = true;
                 int newScrollX = 0;
@@ -215,26 +228,22 @@ public class SlideLayout extends ViewGroup {
                 int finalScrollY = 0;
                 switch (mSlideDirection) {
                     case SLIDE_RIGHT:
-                        mSlideSensitive = mSlideView.getMeasuredWidth() / 2;
-                        if (scrollX > mSlideSensitive) {
+                        if (scrollX > getSlideCriticalValue()) {
                             finalScrollX = mSlideView.getMeasuredWidth();
                         }
                         break;
                     case SLIDE_LEFT:
-                        mSlideSensitive = -mSlideView.getMeasuredWidth() / 2;
-                        if (scrollX < mSlideSensitive) {
+                        if (scrollX < -getSlideCriticalValue()) {
                             finalScrollX = -mSlideView.getMeasuredWidth();
                         }
                         break;
                     case SLIDE_TOP:
-                        mSlideSensitive = -mSlideView.getMeasuredHeight() / 2;
-                        if (scrollY < mSlideSensitive) {
+                        if (scrollY < -getSlideCriticalValue()) {
                             finalScrollY = -mSlideView.getMeasuredHeight();
                         }
                         break;
                     case SLIDE_BOTTOM:
-                        mSlideSensitive = mSlideView.getMeasuredHeight() / 2;
-                        if (scrollY > mSlideSensitive) {
+                        if (scrollY > getSlideCriticalValue()) {
                             finalScrollY = mSlideView.getMeasuredHeight();
                         }
                         break;
@@ -246,6 +255,19 @@ public class SlideLayout extends ViewGroup {
         mLastX = eventX;
         mLastY = eventY;
         return super.dispatchTouchEvent(event);
+    }
+
+    private int getSlideCriticalValue() {
+        if (mSlideDirection == SLIDE_LEFT || mSlideDirection == SLIDE_RIGHT) {
+            if (mSlideCriticalValue == 0) {
+                mSlideCriticalValue = mSlideView.getMeasuredWidth() / 2;
+            }
+        } else {
+            if (mSlideCriticalValue == 0) {
+                mSlideCriticalValue = mSlideView.getMeasuredHeight() / 2;
+            }
+        }
+        return mSlideCriticalValue;
     }
 
     private void smoothScrollTo(int destX, int destY) {
