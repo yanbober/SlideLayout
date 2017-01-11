@@ -8,8 +8,12 @@
     android:orientation="vertical"
     tools:context="cn.yan.slidelayout.MainActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Demo演示测试了SlideLayout上下左右滑动、配合AbsListView、ViewPager、ScrollView等控件的滑动效果。"/>
+
     <LinearLayout
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -107,6 +111,7 @@
             android:background="@android:color/darker_gray"></ListView>
 
         <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
             android:layout_marginLeft="10dp"
             android:layout_width="170dp"
             android:layout_height="200dp"></android.support.v4.view.ViewPager>
@@ -130,7 +135,7 @@
                 android:entries="@array/demo_array">
             </ListView>
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:background="@android:color/holo_green_light"
                 android:gravity="center"
@@ -151,11 +156,49 @@
                     android:layout_width="match_parent"
                     android:layout_height="4096dp"
                     android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="ScrollView" />
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/sqrt_icon"
+                        android:layout_marginTop="5dp"/>
 
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/sqrt_icon"
+                        android:layout_marginTop="5dp"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/sqrt_icon"
+                        android:layout_marginTop="5dp"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/sqrt_icon"
+                        android:layout_marginTop="5dp"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/sqrt_icon"
+                        android:layout_marginTop="5dp"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/sqrt_icon"
+                        android:layout_marginTop="5dp"/>
                 </LinearLayout>
             </ScrollView>
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:background="@android:color/holo_green_light"
                 android:gravity="center"

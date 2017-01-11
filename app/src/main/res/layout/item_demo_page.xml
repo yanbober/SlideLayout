@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.yan.library.SlideLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:slideDirection="fromTop"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/content_id"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="ViewPager"/>
+
+    <TextView
+        android:id="@+id/slide1_id"
+        android:background="@android:color/darker_gray"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="收藏"/>
+</cn.yan.library.SlideLayout>

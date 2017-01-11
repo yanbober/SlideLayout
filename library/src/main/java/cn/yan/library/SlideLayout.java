@@ -258,7 +258,7 @@ public class SlideLayout extends ViewGroup {
         return super.dispatchTouchEvent(event);
     }
 
-    //TODO  when mSlideCriticalValue != 0, slideleft error.
+    //TODO  when mSlideCriticalValue != 0, slide critical need fix.
     private int getSlideCriticalValue() {
         if (mSlideDirection == SLIDE_LEFT || mSlideDirection == SLIDE_RIGHT) {
             if (mSlideCriticalValue == 0) {
