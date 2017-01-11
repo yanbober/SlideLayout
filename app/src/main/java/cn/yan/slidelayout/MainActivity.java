@@ -19,11 +19,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mContentText = (TextView) this.findViewById(R.id.content_id);
-        mSlideText = (TextView) this.findViewById(R.id.slide_id);
-
-        mContentText.setOnClickListener(this);
-        mSlideText.setOnClickListener(this);
+//        mContentText = (TextView) this.findViewById(R.id.content_id);
+//        mSlideText = (TextView) this.findViewById(R.id.slide_id);
+//
+//        mContentText.setOnClickListener(this);
+//        mSlideText.setOnClickListener(this);
 
         mListView = (ListView) this.findViewById(R.id.listview_id);
         DemoListAdapter adapter = new DemoListAdapter();

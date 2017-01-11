@@ -133,6 +133,7 @@ public class MiniSlideRightLayout extends LinearLayout {
                 scrollTo(newScrollX, 0);
                 break;
             case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
                 mIsScrolling = false;
                 getParent().requestDisallowInterceptTouchEvent(false);
                 int finalScrollX = 0;

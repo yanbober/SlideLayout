@@ -73,7 +73,7 @@ public class SlideLayout extends ViewGroup {
     private void init(Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SlideLayout);
         mSlideDirection = typedArray.getInt(R.styleable.SlideLayout_slideDirection, SLIDE_RIGHT);
-        mSlideCriticalValue = typedArray.getInt(R.styleable.SlideLayout_slideCriticalValue, 0);
+        mSlideCriticalValue = typedArray.getDimensionPixelSize(R.styleable.SlideLayout_slideCriticalValue, 0);
         typedArray.recycle();
 
         mScroller = new Scroller(context);
@@ -222,6 +222,7 @@ public class SlideLayout extends ViewGroup {
                 scrollTo(newScrollX, newScrollY);
                 break;
             case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
                 mIsScrolling = false;
                 getParent().requestDisallowInterceptTouchEvent(false);
                 int finalScrollX = 0;
@@ -257,6 +258,7 @@ public class SlideLayout extends ViewGroup {
         return super.dispatchTouchEvent(event);
     }
 
+    //TODO  when mSlideCriticalValue != 0, slideleft error.
     private int getSlideCriticalValue() {
         if (mSlideDirection == SLIDE_LEFT || mSlideDirection == SLIDE_RIGHT) {
             if (mSlideCriticalValue == 0) {
