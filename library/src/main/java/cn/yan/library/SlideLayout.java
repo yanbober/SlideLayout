@@ -178,7 +178,7 @@ public class SlideLayout extends ViewGroup {
                 } else {
                     directionMoveOffset = Math.abs(offsetY) - Math.abs(offsetX);
                 }
-                if (directionMoveOffset < ViewConfiguration.getTouchSlop()) {
+                if (!mIsScrolling && directionMoveOffset < ViewConfiguration.getTouchSlop()) {
                     break;
                 }
                 getParent().requestDisallowInterceptTouchEvent(true);
